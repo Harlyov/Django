@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Player</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: red; }
+        button { padding: 10px 15px; margin-right: 10px; cursor: pointer; }
+        .confirm { background-color: #f44336; color: white; border: none; }
+        .cancel { background-color: #ccc; color: black; border: none; }
+    </style>
+</head>
+<body>
+    <h1>Are you sure you want to delete "{{ object.name }}"?</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="confirm">Yes, Delete</button>
+        <a href="{% url 'players:list' %}"><button type="button" class="cancel">Cancel</button></a>
+    </form>
+</body>
+</html>
