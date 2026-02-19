@@ -1,0 +1,25 @@
+{% extends 'common/base.html' %}
+
+{% block title %}
+    Create Fan
+{% endblock %}
+
+{% block content %}
+    <h1>Create a New Fan</h1>
+
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" class="btn btn-primary">Create Fan</button>
+</form>
+
+<a href="{% url 'fans:list' %}" class="btn btn-secondary mt-2">Back to Fans List</a>
+{% endblock %}

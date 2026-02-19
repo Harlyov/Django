@@ -1,0 +1,17 @@
+{% extends 'common/base.html' %}
+
+{% block title %}
+    Update Fan
+{% endblock %}
+
+{% block content %}
+    <h1>Update Fan</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" class="btn btn-primary">Update Fan</button>
+</form>
+
+<a href="{% url 'fans:list' %}" class="btn btn-secondary mt-2">Back to Fans List</a>
+{% endblock %}
