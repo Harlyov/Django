@@ -23,5 +23,7 @@ urlpatterns = [
     path('matches/',include('matches.urls')),
     path('',include('common.urls')),
     path('fans/',include('fans.urls')),
+    path('comments/',include('comments.urls')),
+
 
 ]

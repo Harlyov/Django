@@ -1,45 +1,56 @@
 {% extends 'common/base.html' %}
 
-{% block title %}
-    Matches List
-{% endblock %}
+{% block title %}Matches List{% endblock %}
 
 {% block content %}
-    <div class="container mt-5">
-        <h2 class="mb-4">Matches</h2>
+<div class="container mt-4">
+    <h1 class="mb-4">Matches</h1>
+
+    {% if matches %}
         <table class="table table-striped table-bordered">
             <thead class="table-dark">
-            <tr>
-                <th>#</th>
-                <th>Match</th>
-                <th>Score</th>
-                <th>Referee</th>
-                <th>Stadium</th>
-                <th>Date</th>
-                <th>Actions</th>
-            </tr>
+                <tr>
+                    <th>Opponent Team</th>
+                    <th>Score</th>
+                    <th>Referee</th>
+                    <th>Stadium</th>
+                    <th>Actions</th>
+                </tr>
             </thead>
             <tbody>
-            {% for match in matches %}
+                {% for match in matches %}
                 <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>Real Madrid - {{ match.opponent_team }}</td>
+                    <td>{{ match.opponent_team }}</td>
                     <td>{{ match.score_goal_real_madrid }} - {{ match.score_goal_opponent }}</td>
                     <td>{{ match.referee }}</td>
                     <td>{{ match.stadium }}</td>
-                    <td>{{ match.date|date:"M d, Y" }}</td>
                     <td>
                         <a href="{% url 'matches:update' match.id %}" class="btn btn-sm btn-warning">Edit</a>
                         <a href="{% url 'matches:delete' match.id %}" class="btn btn-sm btn-danger">Delete</a>
+                        <a href="{% url 'comments:add' match.id %}" class="btn btn-sm btn-primary">Add Comment</a>
                     </td>
                 </tr>
-            {% empty %}
                 <tr>
-                    <td colspan="7" class="text-center">No matches available.</td>
+                    <td colspan="5">
+                        {% if match.match_comments.all %}
+                            <strong>Comments:</strong>
+                            <ul class="list-group list-group-flush">
+                                {% for comment in match.match_comments.all %}
+                                <li class="list-group-item">
+                                    <strong>{{ comment.fan.name }}:</strong> {{ comment.text }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <em>No comments yet.</em>
+                        {% endif %}
+                    </td>
                 </tr>
-            {% endfor %}
+                {% endfor %}
             </tbody>
         </table>
-        <a href="{% url 'matches:create' %}" class="btn btn-success mt-3">Add New Match</a>
-    </div>
+    {% else %}
+        <p>No matches found.</p>
+    {% endif %}
+</div>
 {% endblock %}

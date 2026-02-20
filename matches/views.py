@@ -1,9 +1,8 @@
 from django.contrib import messages
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
-from matches.forms import MatchForm
+from matches.forms import MatchForm, MatchDeleteForm
 from matches.models import Match
 
 
@@ -42,3 +41,17 @@ class MatchDeleteView(DeleteView):
     model = Match
     template_name = 'matches/match_confirm_delete.html'
     success_url = reverse_lazy('matches:list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        match = self.object
+
+        context['readonly_data'] = {
+            "Date": match.date,
+            "Opponent": match.opponent_team,
+            "Score": f"{match.score_goal_real_madrid} - {match.score_goal_opponent}",
+            "Stadium": match.stadium,
+            "Referee": match.referee,
+        }
+
+        return context

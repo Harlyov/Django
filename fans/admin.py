@@ -1,14 +1,9 @@
 from django.contrib import admin
 
-from fans.models import Fan,Comment
+from comments.models import Comment
+from fans.models import Fan
 
 
 @admin.register(Fan)
 class FanAdmin(admin.ModelAdmin):
     list_display = ('name','location','favourite_player')
-
-
-
-@admin.register(Comment)
-class CommentAdmin(admin.ModelAdmin):
-    list_display = ('fan','match','text','created_at')

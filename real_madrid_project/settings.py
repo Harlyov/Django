@@ -33,9 +33,10 @@ PROJECT_APPS = [
     'fans',
     'matches',
     'players',
+    'comments',
+
 ]
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
