@@ -1,27 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Player Update</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1 { color: #333; }
-        form { max-width: 400px; }
-        label { display: block; margin-top: 10px; }
-        input, select { width: 100%; padding: 8px; margin-top: 4px; }
-        button { margin-top: 20px; padding: 10px 15px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
-        button:hover { background-color: #45a049; }
-    </style>
-</head>
-<body>
-    <h1>Player Update</h1>
+{% extends 'common/base.html' %}
+
+{% block title %}Update Player{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Update Player</h1>
 
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Update Player</button>
+        <button type="submit" class="btn btn-success">Update Player</button>
+        <a href="{% url 'players:list' %}" class="btn btn-secondary ms-2">Back to Players</a>
     </form>
-
-    <a href="{% url 'players:list' %}">Back to Players</a>
-</body>
-</html>
+</div>
+{% endblock %}

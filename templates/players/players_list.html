@@ -6,6 +6,7 @@
 <div class="container my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1>Players</h1>
+        <a href="{% url 'players:create' %}" class="btn btn-success">Add New Player</a>
         <a href="{% url 'common:home' %}" class="btn btn-primary">Back to Home</a>
     </div>
 
@@ -19,6 +20,7 @@
                     <th scope="col">Position</th>
                     <th scope="col">Shirt Number</th>
                     <th scope="col">Age</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,6 +37,10 @@
                     <td>{{ player.position }}</td>
                     <td>{{ player.shirt_number }}</td>
                     <td>{{ player.age }}</td>
+                    <td>
+                        <a href="{% url 'players:edit' player.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="{% url 'players:delete' player.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

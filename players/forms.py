@@ -7,7 +7,7 @@ from .models import Player
 class PlayerForm(forms.ModelForm):
     class Meta:
         model = Player
-        fields = ['name', 'position', 'shirt_number', 'age', ]
+        fields = ['name', 'position', 'shirt_number', 'age','photo_url']
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'Enter player name'}),
 

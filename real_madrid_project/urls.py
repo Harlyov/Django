@@ -27,3 +27,5 @@ urlpatterns = [
 
 
 ]
+
+handler404 = 'common.views.custom_404_view'

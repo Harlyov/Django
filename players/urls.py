@@ -8,7 +8,7 @@ app_name = 'players'
 urlpatterns = [
     path('', PlayerListView.as_view(), name='list'),
     path('create/',PlayerCreateView.as_view(),name='create'),
-    path('edit/<int:pk>/',PlayerUpdateView.as_view(),name='еdit'),
+    path('edit/<int:pk>/', PlayerUpdateView.as_view(), name='edit'),
     path('delete/<int:pk>/',PlayerDeleteView.as_view(),name='delete'),
 
 ]
