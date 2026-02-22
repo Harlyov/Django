@@ -8,7 +8,8 @@
 
     <div class="mb-3">
         <a href="{% url 'matches:create' %}" class="btn btn-success">Add Match</a>
-        <a href="{% url 'comments:add' %}" class="btn btn-primary">Add Comment</a>
+        <a href="{% url 'comments:add' %}" class="btn btn-warning">Add Comment</a>
+        <a href="{% url 'common:home' %}" class="btn btn-primary">Back to Home</a>
     </div>
 
     {% if matches %}
