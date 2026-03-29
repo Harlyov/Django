@@ -3,8 +3,10 @@
 {% block title %}Fans List{% endblock %}
 
 {% block content %}
-    <h1>Fans</h1>
-    <a href="{% url 'common:home' %}" class="btn btn-primary">Back to Home</a>
+<h1>Fans</h1>
+
+<a href="{% url 'common:home' %}" class="btn btn-primary mb-3">Back to Home</a>
+
 {% if fans %}
 <table class="table table-striped">
     <thead>
@@ -12,7 +14,10 @@
             <th>Name</th>
             <th>Location</th>
             <th>Favourite Player</th>
-            <th>Actions</th>
+
+            {% if perms.fans.change_fan or perms.fans.delete_fan %}
+                <th>Actions</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -21,10 +26,18 @@
             <td>{{ fan.name }}</td>
             <td>{{ fan.location }}</td>
             <td>{{ fan.favourite_player.name }}</td>
+
+            {% if perms.fans.change_fan or perms.fans.delete_fan %}
             <td>
-                <a href="{% url 'fans:edit' fan.pk %}" class="btn btn-sm btn-warning">Edit</a>
-                <a href="{% url 'fans:delete' fan.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                {% if perms.fans.change_fan %}
+                    <a href="{% url 'fans:edit' fan.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                {% endif %}
+
+                {% if perms.fans.delete_fan %}
+                    <a href="{% url 'fans:delete' fan.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                {% endif %}
             </td>
+            {% endif %}
         </tr>
         {% endfor %}
     </tbody>
@@ -33,5 +46,8 @@
 <p>No fans found.</p>
 {% endif %}
 
-<a href="{% url 'fans:create' %}" class="btn btn-success">Add New Fan</a>
+{% if perms.fans.add_fan %}
+    <a href="{% url 'fans:create' %}" class="btn btn-success">Add New Fan</a>
+{% endif %}
+
 {% endblock %}

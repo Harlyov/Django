@@ -7,7 +7,10 @@
     <h1 class="mb-4">Matches</h1>
 
     <div class="mb-3">
-        <a href="{% url 'matches:create' %}" class="btn btn-success">Add Match</a>
+        {% if perms.matches.add_match %}
+            <a href="{% url 'matches:create' %}" class="btn btn-success">Add Match</a>
+        {% endif %}
+
         <a href="{% url 'comments:add' %}" class="btn btn-warning">Add Comment</a>
         <a href="{% url 'common:home' %}" class="btn btn-primary">Back to Home</a>
     </div>
@@ -19,21 +22,35 @@
                     <th>Result</th>
                     <th>Referee</th>
                     <th>Stadium</th>
-                    <th>Actions</th>
+
+                    {% if perms.matches.change_match or perms.matches.delete_match %}
+                        <th>Actions</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
                 {% for match in matches %}
                 <tr>
-                    <!-- Result column with Real Madrid first -->
-                    <td>Real Madrid {{ match.score_goal_real_madrid }} - {{ match.score_goal_opponent }} {{ match.opponent_team }}</td>
+                    <td>
+                        Real Madrid {{ match.score_goal_real_madrid }} -
+                        {{ match.score_goal_opponent }} {{ match.opponent_team }}
+                    </td>
                     <td>{{ match.referee }}</td>
                     <td>{{ match.stadium }}</td>
+
+                    {% if perms.matches.change_match or perms.matches.delete_match %}
                     <td>
-                        <a href="{% url 'matches:update' match.id %}" class="btn btn-sm btn-warning">Edit</a>
-                        <a href="{% url 'matches:delete' match.id %}" class="btn btn-sm btn-danger">Delete</a>
+                        {% if perms.matches.change_match %}
+                            <a href="{% url 'matches:update' match.id %}" class="btn btn-sm btn-warning">Edit</a>
+                        {% endif %}
+
+                        {% if perms.matches.delete_match %}
+                            <a href="{% url 'matches:delete' match.id %}" class="btn btn-sm btn-danger">Delete</a>
+                        {% endif %}
                     </td>
+                    {% endif %}
                 </tr>
+
                 <tr>
                     <td colspan="4">
                         {% if match.match_comments.all %}
@@ -50,6 +67,7 @@
                         {% endif %}
                     </td>
                 </tr>
+
                 {% endfor %}
             </tbody>
         </table>

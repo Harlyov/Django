@@ -24,8 +24,11 @@ urlpatterns = [
     path('',include('common.urls')),
     path('fans/',include('fans.urls')),
     path('comments/',include('comments.urls')),
+    path('accounts/',include('accounts.urls')),
+
 
 
 ]
 
 handler404 = 'common.views.custom_404_view'
+handler500 = 'common.views.custom_500_view'

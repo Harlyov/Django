@@ -5,12 +5,24 @@
 {% endblock %}
 
 {% block content %}
+<div class="container my-4">
     <h1>Are you sure you want to delete this match?</h1>
+
+    <div class="card my-3">
+        <div class="card-body">
+            <h5 class="card-title">Match Details</h5>
+            <ul class="list-group list-group-flush">
+                {% for key, value in readonly_data.items %}
+                    <li class="list-group-item"><strong>{{ key }}:</strong> {{ value }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
         <button type="submit" class="btn btn-danger">Yes, Delete</button>
         <a href="{% url 'matches:list' %}" class="btn btn-secondary">Cancel</a>
     </form>
+</div>
 {% endblock %}

@@ -34,6 +34,8 @@ PROJECT_APPS = [
     'matches',
     'players',
     'comments',
+    'accounts',
+
 
 ]
 
@@ -91,6 +93,14 @@ DATABASES = {
         "PORT": "5432",
     }
 }
+
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+LOGIN_REDIRECT_URL = 'common:home'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

@@ -1,12 +1,24 @@
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
 
-from matches.forms import MatchForm, MatchDeleteForm
+from matches.forms import MatchForm
 from matches.models import Match
 
+class MatchPermissionsRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        user = self.request.user
+        return user.has_perm('matches.add_match') or \
+               user.has_perm('matches.change_match') or \
+               user.has_perm('matches.delete_match')
 
-class MatchCreateView(CreateView):
+    def handle_no_permission(self):
+        messages.error(self.request, "You don't have permission to access Match management.")
+        raise PermissionDenied
+
+class MatchCreateView(LoginRequiredMixin, MatchPermissionsRequiredMixin,CreateView):
     model = Match
     form_class = MatchForm
     template_name = 'matches/match_create.html'
@@ -18,14 +30,14 @@ class MatchCreateView(CreateView):
 
 
 
-class MatchListView(ListView):
+class MatchListView(LoginRequiredMixin,ListView):
     model = Match
     template_name = 'matches/match_list.html'
     context_object_name = 'matches'
 
 
 
-class MatchUpdateView(UpdateView):
+class MatchUpdateView(LoginRequiredMixin, MatchPermissionsRequiredMixin,UpdateView):
     model = Match
     form_class = MatchForm
     template_name = 'matches/match_update.html'
@@ -37,7 +49,7 @@ class MatchUpdateView(UpdateView):
 
 
 
-class MatchDeleteView(DeleteView):
+class MatchDeleteView(LoginRequiredMixin, MatchPermissionsRequiredMixin,DeleteView):
     model = Match
     template_name = 'matches/match_confirm_delete.html'
     success_url = reverse_lazy('matches:list')
