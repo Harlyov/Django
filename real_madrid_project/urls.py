@@ -16,7 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from matches.views import MatchViewSet
 
+
+router = DefaultRouter()
+router.register('matches', MatchViewSet, basename='match-api')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('players/',include('players.urls')),
@@ -25,6 +30,7 @@ urlpatterns = [
     path('fans/',include('fans.urls')),
     path('comments/',include('comments.urls')),
     path('accounts/',include('accounts.urls')),
+    path('api/', include(router.urls)),
 
 
 

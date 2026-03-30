@@ -3,6 +3,10 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
+from rest_framework import viewsets, permissions
+from matches.models import Match
+from .serializers import MatchSerializer
+from rest_framework.permissions import IsAuthenticated,IsAdminUser
 
 from matches.forms import MatchForm
 from matches.models import Match
@@ -67,3 +71,9 @@ class MatchDeleteView(LoginRequiredMixin, MatchPermissionsRequiredMixin,DeleteVi
         }
 
         return context
+
+
+class MatchViewSet(viewsets.ModelViewSet):
+    queryset = Match.objects.all()
+    serializer_class = MatchSerializer
+    permission_classes = [IsAdminUser]
