@@ -7,6 +7,8 @@ from rest_framework import viewsets, permissions
 from matches.models import Match
 from .serializers import MatchSerializer
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
+from .tasks import capitalize_opponent_match_teams
+from celery.exceptions import CeleryError
 
 from matches.forms import MatchForm
 from matches.models import Match
@@ -29,8 +31,14 @@ class MatchCreateView(LoginRequiredMixin, MatchPermissionsRequiredMixin,CreateVi
     success_url = reverse_lazy('matches:list')
 
     def form_valid(self, form):
+        response = super().form_valid(form)
+        try:
+            capitalize_opponent_match_teams.delay(self.object.id)
+        except CeleryError as exc:
+            print(f"Celery task could not be sent: {exc}")
+
         messages.success(self.request, 'Match successfully created!')
-        return super().form_valid(form)
+        return response
 
 
 
