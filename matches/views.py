@@ -6,7 +6,7 @@ from django.core.exceptions import PermissionDenied
 from rest_framework import viewsets, permissions
 from matches.models import Match
 from .serializers import MatchSerializer
-from rest_framework.permissions import IsAuthenticated,IsAdminUser
+from rest_framework.permissions import IsAuthenticated,IsAdminUser,IsAuthenticatedOrReadOnly
 from .tasks import capitalize_opponent_match_teams
 from celery.exceptions import CeleryError
 
@@ -84,4 +84,4 @@ class MatchDeleteView(LoginRequiredMixin, MatchPermissionsRequiredMixin,DeleteVi
 class MatchViewSet(viewsets.ModelViewSet):
     queryset = Match.objects.all()
     serializer_class = MatchSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticatedOrReadOnly]
