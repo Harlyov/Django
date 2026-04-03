@@ -1,0 +1,9 @@
+SECRET_KEY='django-insecure-a6c9z640a5kr7ayiqsvd+05&rg!3#17!t9d)nt^u#akya$4$ut'
+DEBUG=True
+DB_NAME=real_madrid_db
+DB_USER=postgres
+DB_PASSWORD=admin
+DB_HOST=127.0.0.1
+DB_PORT=5432
+CELERY_BROKER_URL=redis://localhost:6379/0
+CELERY_RESULT_BACKEND=redis://localhost:6379/0
