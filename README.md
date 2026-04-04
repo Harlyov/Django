@@ -1,6 +1,7 @@
 # Documentation
 
 ## Project Overview
+### http://54.164.121.95/
 
 The goal of this project is to develop a Django web application for managing football-related data for Real Madrid.
 
@@ -15,7 +16,6 @@ The application demonstrates relational database design, form validation, full C
 
 Authentication and user management are intentionally excluded as per project requirements.
 
-
 ## Contents
 
 - Project Setup  
@@ -26,7 +26,8 @@ Authentication and user management are intentionally excluded as per project req
 - Views  
 - Templates  
 - Relationships  
-- Design Decisions
+- Design Decisions  
+- Usage & Deployment  
 
 ## Project Setup
 
@@ -46,7 +47,6 @@ It follows a modular architecture with separate Django apps:
 
 Each app has a clearly defined responsibility.
 
-
 ## Database Architecture
 
 The project includes multiple database models with properly defined relationships.
@@ -64,7 +64,6 @@ The project includes multiple database models with properly defined relationship
 
 This ensures proper relational structure and data consistency.
 
-
 ## Design Decisions
 
 ### Modular Architecture
@@ -77,3 +76,19 @@ This ensures:
 - Loose coupling  
 - Better maintainability  
 - Easier testing  
+
+## Usage & Deployment
+
+### Prerequisites
+
+Make sure the following are installed:
+
+- Docker  
+- Docker Compose  
+- Git  
+
+### Clone the Project
+
+```bash
+git clone https://github.com/Harlyov/Django.git
+cd Django
