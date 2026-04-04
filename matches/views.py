@@ -33,10 +33,7 @@ class MatchCreateView(LoginRequiredMixin, MatchPermissionsRequiredMixin,CreateVi
     def form_valid(self, form):
         response = super().form_valid(form)
         try:
-            capitalize_opponent_match_teams.apply_async(
-                args=[self.object.id],
-                ignore_result=True
-            )
+            capitalize_opponent_match_teams.delay(self.object.id)
         except CeleryError as exc:
             print(f"Celery task could not be sent: {exc}")
 
